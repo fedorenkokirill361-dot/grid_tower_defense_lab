@@ -35,7 +35,7 @@ def _blit_lines(surface, font, lines, x, y, color, gap):
     return y
 
 
-def draw_menu(surface, fonts, tower_cost):
+def draw_menu(surface, fonts, tower_cost, player_name):
     surface.fill(COLORS["bg"])
     title = fonts["big"].render("БАШНИ И ЭНЕРГИЯ", True, COLORS["text"])
     subtitle = fonts["medium"].render("Вариант 23. Защита базы на сетке", True, COLORS["gold"])
@@ -65,7 +65,10 @@ def draw_menu(surface, fonts, tower_cost):
     _blit_lines(surface, fonts["body"], left, 48, 230, COLORS["text"], 36)
     _blit_lines(surface, fonts["body"], right, 470, 230, COLORS["text"], 36)
 
-    hint = fonts["medium"].render("Нажмите любую клавишу, чтобы начать", True, COLORS["gold"])
+    name_text = f"Имя: {player_name}_" if player_name else "Имя: _"
+    name_image = fonts["body"].render(name_text, True, COLORS["text"])
+    surface.blit(name_image, name_image.get_rect(center=(WINDOW_WIDTH // 2, 480)))
+    hint = fonts["medium"].render("Enter — начать игру", True, COLORS["gold"])
     surface.blit(hint, hint.get_rect(center=(WINDOW_WIDTH // 2, 520)))
     cost = fonts["small"].render(
         f"Башня стоит {tower_cost:g} золота. На тропе и на генераторе строить нельзя.",

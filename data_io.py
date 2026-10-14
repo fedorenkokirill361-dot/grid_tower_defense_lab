@@ -1,11 +1,13 @@
-"""Чтение баланса из JSON и запись поражения в лог.
+"""Чтение баланса из JSON, запись поражения в лог и строки в scores.csv.
 
 Если defense_balances.json нет или он сломан, игра не закрывается:
 берутся числа из constants.py, а причина печатается в консоль.
 """
 
+import csv
 import json
 import logging
+from datetime import datetime
 from pathlib import Path
 
 from constants import ATTACK_RADIUS, TOWER_COST, TOWER_DAMAGE, WAVES
@@ -13,6 +15,7 @@ from constants import ATTACK_RADIUS, TOWER_COST, TOWER_DAMAGE, WAVES
 FOLDER = Path(__file__).resolve().parent
 BALANCES_PATH = FOLDER / "defense_balances.json"
 DEFEAT_LOG_PATH = FOLDER / "log_defense.txt"
+SCORES_PATH = FOLDER / "scores.csv"
 
 
 class Balance:
@@ -99,6 +102,20 @@ def _defeat_logger():
     handler.setFormatter(logging.Formatter("%(asctime)s | %(message)s", datefmt="%H:%M:%S"))
     logger.addHandler(handler)
     return logger
+
+
+def save_score(name, wave, status, path=SCORES_PATH):
+    """Дописывает результат партии в scores.csv.
+
+    Если файла ещё нет, первая строка — заголовок.
+    Время берётся в момент записи, формат HH:MM:SS.
+    """
+    new_file = not Path(path).exists()
+    with open(path, "a", encoding="utf-8", newline="") as file:
+        writer = csv.writer(file)
+        if new_file:
+            writer.writerow(["Имя", "Волна", "Статус", "Время"])
+        writer.writerow([name, wave, status, datetime.now().strftime("%H:%M:%S")])
 
 
 def log_defeat(wave_number, towers):
