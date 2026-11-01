@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Виджет обороны</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="layout">
+        <section class="hud">
+            <span>Золото <b id="gold">130</b></span>
+            <span>Волна <b id="wave">0 / 5</b></span>
+            <span>База <b id="base">12</b></span>
+            <span id="status">бой</span>
+            <span class="meter" aria-hidden="true"><span id="meter" class="meter-fill high"></span></span>
+            <span id="meter-caption">устойчивое</span>
+        </section>
+        <div class="stage">
+            <canvas id="game" width="800" height="560"></canvas>
+            <div id="result" class="result hidden"></div>
+        </div>
+        <p class="hints">WASD или стрелки двигают обзор. Клик ставит выбранную в каталоге башню. R начинает партию заново. Дальше 280 px от обзора поле не рисуется.</p>
+        <section class="scenarios">
+            <button type="button" data-scenario="pause">Пауза</button>
+            <button type="button" data-scenario="callWave">Вызвать волну</button>
+            <button type="button" data-scenario="laserVolley">Залп</button>
+            <button type="button" data-scenario="powerSurge">Усилить питание</button>
+            <button type="button" data-scenario="revealMap">Показать карту</button>
+            <button type="button" data-scenario="grantGold">+80 золота</button>
+            <button type="button" id="restart">Заново</button>
+        </section>
+    </div>
+    <script type="module">
+        import { boot } from './js/widget.js';
+        boot(document);
+    </script>
+</body>
+</html>
