@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Каталог — Tower Defense Strategy</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="page-inventory">
+    <div class="site-shell">
+        <header>
+            <button class="burger" id="burger" type="button" aria-label="Меню">☰</button>
+            <div class="brand">Tower Defense Strategy</div>
+            <div class="subtitle">каталог башен</div>
+            <nav class="top-nav">
+                <a href="../index.html">Поле</a>
+                <a href="inventory.html">Каталог</a>
+            </nav>
+            <nav class="mobile-menu" id="mobile-menu">
+                <a class="mobile-link" href="../index.html">Поле</a>
+                <a class="mobile-link" href="inventory.html">Каталог</a>
+            </nav>
+        </header>
+        <main>
+            <div class="catalog">
+                <h1>Каталог башен</h1>
+                <p class="muted">Тот же ключ defense_towers, что у магазина на поле. Новая карточка появляется там без ручного обновления страницы, если поле открыто в другой вкладке.</p>
+                <form id="create-form">
+                    <div class="grid">
+                        <label>Название<input name="name" required maxlength="24"><span class="error" data-error="name"></span></label>
+                        <label>Урон<input name="damage" type="number" min="1" max="200" required><span class="error" data-error="damage"></span></label>
+                        <label>Радиус<input name="radius" type="number" min="40" max="300" required><span class="error" data-error="radius"></span></label>
+                        <label>Тип энергии<input name="energyType" required maxlength="16"><span class="error" data-error="energyType"></span></label>
+                        <label>Цена<input name="cost" type="number" min="1" max="500" required><span class="error" data-error="cost"></span></label>
+                    </div>
+                    <button type="submit">Добавить тип</button>
+                </form>
+                <div class="filters">
+                    <label>Радиус не больше <output id="filter-radius-value">300</output>
+                        <input id="filter-radius" type="range" min="40" max="300" value="300">
+                    </label>
+                    <label>Поиск по имени<input id="filter-name" type="search" placeholder="лазер"></label>
+                </div>
+                <table id="towers">
+                    <thead>
+                        <tr>
+                            <th>Название</th>
+                            <th>Урон</th>
+                            <th>Радиус</th>
+                            <th>Энергия</th>
+                            <th>Цена</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </main>
+        <footer>Удаление спрашивает подтверждение. Правка идёт в той же строке таблицы.</footer>
+    </div>
+    <script type="module" src="../js/inventory.js"></script>
+</body>
+</html>

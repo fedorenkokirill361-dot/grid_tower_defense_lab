@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tower Defense Strategy</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="game-page">
+    <div class="site-shell">
+        <header>
+            <button class="burger" id="burger" type="button" aria-label="Меню">☰</button>
+            <div class="brand">Tower Defense Strategy</div>
+            <div class="subtitle">штаб поля</div>
+            <nav class="top-nav">
+                <a href="index.html">Поле</a>
+                <a href="pages/inventory.html">Каталог</a>
+            </nav>
+            <nav class="mobile-menu" id="mobile-menu">
+                <a class="mobile-link" href="index.html">Поле</a>
+                <a class="mobile-link" href="pages/inventory.html">Каталог</a>
+            </nav>
+        </header>
+        <main>
+            <section class="hud">
+                <span>Золото <b id="gold">130</b></span>
+                <span>Волна <b id="wave">0 / 5</b></span>
+                <span class="wave-meter" aria-hidden="true"><span id="wave-meter" class="wave-fill"></span></span>
+                <span>База <b id="base">12</b></span>
+                <span class="meter" aria-hidden="true"><span id="meter" class="meter-fill high"></span></span>
+                <span id="meter-caption">устойчивое</span>
+                <span id="status">бой</span>
+            </section>
+            <div class="stage">
+                <canvas id="game" width="800" height="560"></canvas>
+                <div id="result" class="result hidden"></div>
+            </div>
+            <p class="hints">WASD двигает обзор. Клик ставит башню, выбранную карточкой справа. R начинает партию заново.</p>
+            <section class="scenarios">
+                <button type="button" data-scenario="pause">Пауза</button>
+                <button type="button" data-scenario="callWave">Вызвать волну</button>
+                <button type="button" data-scenario="laserVolley">Залп</button>
+                <button type="button" data-scenario="powerSurge">Усилить питание</button>
+                <button type="button" data-scenario="revealMap">Показать карту</button>
+                <button type="button" data-scenario="grantGold">+80 золота</button>
+                <button type="button" id="restart">Заново</button>
+            </section>
+        </main>
+        <aside id="shop" class="shop"></aside>
+        <footer>Питание и выстрелы считает ядро. Страница только рисует поле и читает каталог башен.</footer>
+    </div>
+    <script type="module" src="js/widget-integration.js"></script>
+</body>
+</html>
