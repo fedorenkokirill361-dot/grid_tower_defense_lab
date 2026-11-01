@@ -1,0 +1,8 @@
+{
+  "name": "defense_js",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node selftest.js"
+  }
+}

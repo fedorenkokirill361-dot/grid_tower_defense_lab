@@ -1,0 +1,27 @@
+{
+  "path": [
+    [0, 1],
+    [4, 1],
+    [4, 5],
+    [10, 5],
+    [10, 2],
+    [15, 2],
+    [15, 11],
+    [19, 11]
+  ],
+  "generator": [7, 9],
+  "tower": {
+    "name": "Лазер",
+    "cost": 40,
+    "damage": 18,
+    "radius": 120,
+    "energyType": "луч"
+  },
+  "waves": [
+    {"count": 6, "hp": 36, "speed": 55, "reward": 8},
+    {"count": 8, "hp": 54, "speed": 62, "reward": 9},
+    {"count": 10, "hp": 72, "speed": 68, "reward": 10},
+    {"count": 8, "hp": 120, "speed": 52, "reward": 15},
+    {"count": 12, "hp": 96, "speed": 78, "reward": 12}
+  ]
+}
