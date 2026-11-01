@@ -21,7 +21,7 @@ from constants import (
     WINDOW_HEIGHT,
     WINDOW_WIDTH,
 )
-from data_io import load_balances, log_defeat
+from data_io import load_balances, log_defeat, save_score
 from enemy import Enemy
 from energy import power_network
 from level import (
@@ -41,6 +41,7 @@ class Game:
     def __init__(self):
         self.fonts = load_fonts()
         self.balance = load_balances()
+        self.player_name = ""
         self.reset()
 
     def reset(self):
@@ -78,24 +79,32 @@ class Game:
 
     def handle_event(self, event):
         if event.type == pygame.KEYDOWN:
-            self._on_key(event.key)
+            self._on_key(event)
         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             self._on_click(event.pos)
         elif event.type == pygame.MOUSEMOTION and self.state == STATE_PLAY:
             self.hover_cell = cell_from_pixel(*event.pos)
 
-    def _on_key(self, key):
-        # В меню любая клавиша начинает игру. R работает только на финальном экране,
-        # чтобы случайный перезапуск не стирал расставленные башни.
+    def _on_key(self, event):
+        # В меню набирается имя, Enter начинает партию. R работает только на финальном
+        # экране, чтобы случайный перезапуск не стирал расставленные башни.
         if self.state == STATE_MENU:
-            self.start_play()
-        elif self.state in (STATE_VICTORY, STATE_DEFEAT) and key == pygame.K_r:
+            self._on_menu_key(event)
+        elif self.state in (STATE_VICTORY, STATE_DEFEAT) and event.key == pygame.K_r:
             self.reset()
 
-    def _on_click(self, pos):
-        if self.state == STATE_MENU:
+    def _on_menu_key(self, event):
+        if event.key in (pygame.K_RETURN, pygame.K_KP_ENTER):
             self.start_play()
             return
+        if event.key == pygame.K_BACKSPACE:
+            self.player_name = self.player_name[:-1]
+            return
+        character = event.unicode
+        if character and character.isprintable() and len(self.player_name) < 20:
+            self.player_name += character
+
+    def _on_click(self, pos):
         if self.state != STATE_PLAY:
             return
         self.try_build(pos)
@@ -175,22 +184,28 @@ class Game:
             kept.append(enemy)
         self.enemies = kept
 
+    def _save_score(self, status):
+        name = self.player_name.strip() or "Игрок"
+        save_score(name, self.last_started_wave, status)
+
     def _check_outcome(self):
         if self.base_hp <= 0:
             self.base_hp = 0
             self.state = STATE_DEFEAT
             log_defeat(self.last_started_wave, self.towers)
+            self._save_score("Поражение")
             return
         waves_done = self.current_wave >= len(self.balance.waves)
         if waves_done and not self.enemies:
             self.state = STATE_VICTORY
+            self._save_score("Победа")
 
     def draw(self, surface):
         # match сравнивает состояние с готовыми строками. Так экран
         # меню, боя и финала не смешиваются в одной цепочке if.
         match self.state:
             case "menu":
-                draw_menu(surface, self.fonts, self.balance.tower_cost)
+                draw_menu(surface, self.fonts, self.balance.tower_cost, self.player_name)
             case "play" | "victory" | "defeat":
                 self._draw_battle(surface)
                 if self.state == STATE_VICTORY:
