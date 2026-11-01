@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.pdf
+screenshots_tmp/
+.env
+02_бот/sessions/*.json
+02_бот/bot_flight.log
+01_игра/scores.csv
+01_игра/log_defense.txt
