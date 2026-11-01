@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Каталог башен</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <main>
+        <h1>Каталог оборонительных башен</h1>
+        <p class="lead">Записи лежат в LocalStorage под ключом defense_towers. Игровой сайт читает тот же ключ.</p>
+        <form id="create-form">
+            <div class="grid">
+                <label>Название<input name="name" required maxlength="24"><span class="error" data-error="name"></span></label>
+                <label>Урон<input name="damage" type="number" min="1" max="200" required><span class="error" data-error="damage"></span></label>
+                <label>Радиус<input name="radius" type="number" min="40" max="300" required><span class="error" data-error="radius"></span></label>
+                <label>Тип энергии<input name="energyType" required maxlength="16"><span class="error" data-error="energyType"></span></label>
+                <label>Цена<input name="cost" type="number" min="1" max="500" required><span class="error" data-error="cost"></span></label>
+            </div>
+            <button type="submit">Добавить тип</button>
+        </form>
+        <div class="filters">
+            <label>Радиус не больше <output id="filter-radius-value">300</output>
+                <input id="filter-radius" type="range" min="40" max="300" value="300">
+            </label>
+            <label>Поиск по имени<input id="filter-name" type="search" placeholder="лазер"></label>
+        </div>
+        <table id="towers">
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Урон</th>
+                    <th>Радиус</th>
+                    <th>Энергия</th>
+                    <th>Цена</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </main>
+    <script type="module" src="js/crud.js"></script>
+</body>
+</html>
